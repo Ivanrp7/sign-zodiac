@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     var horoscopeList: List<Horoscope> = Horoscope.horoscopeList
 
     lateinit var recyclerView: RecyclerView
+    lateinit var adapter: HoroscopeAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +33,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         recyclerView = findViewById(R.id.recyclerView)
+
+        adapter = HoroscopeAdapter(horoscopeList) { position ->
+            val horoscope = horoscopeList[position]
+
+            //Toast.makeText(this, horoscope.name, Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.EXTRA_HOROSCOPE_ID, horoscope.id)
+            startActivity(intent)
+        }
 
         val adapter = HoroscopeAdapter(horoscopeList) { position ->
             val horoscope = horoscopeList[position]
@@ -58,8 +68,11 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
 
-            override fun onQueryTextChange(s: String): Boolean {
-                Log.i("MENU", s)
+            override fun onQueryTextChange(query: String): Boolean {
+                horoscopeList = Horoscope.horoscopeList.filter {
+                    getString(it.name).contains(query, true)
+                }
+                adapter.updateItems(horoscopeList)
                 return false
             }
         })
