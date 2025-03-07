@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         recyclerView = findViewById(R.id.recyclerView)
+    }
+
         override fun onResume() {
             super.onResume()
 
