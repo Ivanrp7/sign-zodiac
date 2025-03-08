@@ -61,11 +61,7 @@ class DetailActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_favorite -> {
                 isFavorite = !isFavorite
-                if (isFavorite) {
-                    session.setFavorite(horoscope.id)
-                } else {
-                    session.setFavorite("")
-                }
+                session.setFavorite(horoscope.id, isFavorite)
                 setFavoriteIcon()
                 true
             }
@@ -77,6 +73,10 @@ class DetailActivity : AppCompatActivity() {
 
                 val shareIntent = Intent.createChooser(sendIntent, null)
                 startActivity(shareIntent)
+                true
+            }
+            android.R.id.home -> {
+                finish()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -95,6 +95,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         nameTextView = findViewById(R.id.nameTextView)
         dateTextView = findViewById(R.id.dateTextView)
         iconImageView = findViewById(R.id.iconImageView)
