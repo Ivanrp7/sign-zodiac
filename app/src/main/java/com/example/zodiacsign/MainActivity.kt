@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: HoroscopeAdapter
-    var selectedPosition = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,17 +46,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra(DetailActivity.EXTRA_HOROSCOPE_ID, horoscope.id)
             startActivity(intent)
-        }
-
-        val adapter = HoroscopeAdapter(horoscopeList) { position ->
-            val horoscope = horoscopeList[position]
-
-            //Toast.makeText(this, horoscope.name, Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra(DetailActivity.EXTRA_HOROSCOPE_ID, horoscope.id)
-            startActivity(intent)
-
-            selectedPosition = position
         }
 
         recyclerView.adapter = adapter
